@@ -10,7 +10,7 @@ public class Aiuto{
 
     private static final  Scanner sc = new Scanner(System.in);
      public static <T> void print(T arg) {
-        System.out.println(arg.toString());
+        System.out.print(arg.toString());
     }
 
     public static <T> void print(T a[]){
@@ -20,18 +20,19 @@ public class Aiuto{
     }
 
     public static <K,T> List<T> listaValori(Map<K,T> arg){
-        List<T> res=new ArrayList();
+        List<T> res=new ArrayList<>();
         for(K key:arg.keySet())
             res.add(arg.get(key));
         return res;
     }
 
-    private static int readInt() {
+    public static int readInt() {
         int res = sc.nextInt();
+        sc.nextLine();
         return res;
     }
 
-    private static double readDec() {
+    public static double readDec() {
         double res = sc.nextDouble();
         return res;
     }
@@ -52,5 +53,11 @@ public class Aiuto{
            sb.append(c);
         }
         return sb.toString();
+    }
+
+    public static String maiuscola(String arg){
+        char[] arr=arg.toCharArray();
+        arr[0]=Character.toUpperCase(arr[0]);
+        return String.valueOf(arr);
     }
 }

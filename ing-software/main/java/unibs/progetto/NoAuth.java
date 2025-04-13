@@ -27,14 +27,12 @@ public class NoAuth extends Sessione{
         while(!finita()){
             print("Benvenuto nel programma di scambio ore\n");
             String scelta=acquisisci(1);
-            String uname=acquisisci(2);
-            String pswd=acquisisci(3);
             switch(scelta){
                 case"fine" -> setFinita();
-                case"1" -> {try{autenticaConf(uname, pswd);}catch(Exception e){}}
-                case"2" -> {try{autenticaFru(uname, pswd);}catch(Exception e){}}
+                case"1" -> {try{autenticaConf(acquisisci(2), acquisisci(3));}catch(Exception e){}}
+                case"2" -> {try{autenticaFru(acquisisci(2), acquisisci(3));}catch(Exception e){}}
                 default -> {
-                    print("La scelta indicata non è corretta\n");
+                    print("La scelta indicata non e\' corretta\n");
                     print("Riprovare\n");
                 }
             }
@@ -62,7 +60,7 @@ public class NoAuth extends Sessione{
     }
 
     private String getUname(){
-        print("\nIndicrae il proprio username: ");
+        print("\nIndicare il proprio username: ");
         return readLine().toLowerCase();
     }
 
@@ -86,7 +84,7 @@ public class NoAuth extends Sessione{
     private void autenticaConf(String uname, String pswd) throws FileNotFoundException, IOException{
      if (autenticato(uname,pswd,pathConf)){
             Utente u=new Configuratore(uname,pswd);
-            setSucc(new SessioneConf(u));
+            setSucc(SessioneConf.nuova(u));
             setFinita();
         }else{
             print("\nNome utente o password non corretto\n");

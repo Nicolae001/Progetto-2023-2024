@@ -1,8 +1,10 @@
 package unibs.progetto;
 
-public class Categoria{
+import java.io.Serializable;
 
-    private String nome;
+public class Categoria implements Serializable{
+
+    private final String nome;
     private Categoria genitore=null;
     private Campo campo=null;
 

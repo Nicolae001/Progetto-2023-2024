@@ -1,5 +1,6 @@
 package unibs.progetto;
 import static unibs.util.Aiuto.print;
+import static unibs.util.Aiuto.readLine;
 public class SessioneFruitore extends Sessione{
 
     SessioneFruitore(Utente arg){
@@ -8,6 +9,7 @@ public class SessioneFruitore extends Sessione{
         setSucc(null);
     }
 
+    @Override
     public void avvia(){
         print("Sezione non ancora disponibile");
         while(!finita()){
@@ -16,6 +18,13 @@ public class SessioneFruitore extends Sessione{
         //dal loop
         setFinita();
         }
+    }
+
+    @Override
+    public String acquisisci(int i){
+        return switch(i){
+            default->readLine().toLowerCase();
+        };
     }
 
 }

@@ -3,7 +3,7 @@ package unibs.progetto;
 
 public class Elemento{
   
-    private String descr;
+    private String descr="";
     private String nome;
     private Elemento(String arg){
         nome=arg;

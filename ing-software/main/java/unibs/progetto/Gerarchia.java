@@ -1,4 +1,5 @@
 package unibs.progetto;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -7,7 +8,7 @@ import unibs.util.Aiuto;
 import static unibs.util.Aiuto.print;
 import unibs.util.InvalidArgumentException;
 
-public class Gerarchia{
+public class Gerarchia implements Serializable{
     private Categoria radice;
     private List<Categoria> foglie;
     private static List<Gerarchia> contabile=new ArrayList();
@@ -20,8 +21,8 @@ public class Gerarchia{
         Gerarchia res=new Gerarchia(arg);
         for(Gerarchia g: contabile){
             if(res.getRadice().getNome().equals(g.getRadice().getNome())){
-                print("Impossibile creare nuova gerarchia\nUna gerarchia con"+
-                "questa radice esiste già\n\n");
+                print("Impossibile creare nuova gerarchia.\n");
+                print("Una gerarchia con questa radice esiste già\n\n");
                 return null;
             }
         }
@@ -32,7 +33,7 @@ public class Gerarchia{
 
     private void getFoglie(){
         List<Categoria> res = new ArrayList();
-        List<Categoria> tmp= appiattisci(radice);
+        List<Categoria> tmp= appiattisci(radice,null);
         for(Categoria c : tmp){
             if(c.getCampo()==null)
                 res.add(c);
@@ -40,7 +41,7 @@ public class Gerarchia{
         foglie=res;
     }
     private boolean conforme(Categoria arg){
-       List<Categoria> tmp= appiattisci(radice);
+       List<Categoria> tmp= appiattisci(radice, null);
        for(Categoria c : tmp){
         if(arg.getNome().equals(c.getNome()))
             return false;
@@ -48,21 +49,23 @@ public class Gerarchia{
        return true;
     }
 
-    private List<Categoria> appiattisci(Categoria rad){
-        List<Categoria> res= new ArrayList();
-        res.add(rad);
+    private List<Categoria> appiattisci(Categoria rad, List<Categoria> list){
+        if(list==null)
+            list=new ArrayList<Categoria>();
+        list.add(rad);
         Map<Elemento, Categoria> dom=rad.getCampo().getDom();
         if(dom!=null){
             for(Elemento e:dom.keySet()){
                 if(dom.get(e)!=null)
-                    appiattisci(dom.get(e));
+                    appiattisci(dom.get(e), list);
             }
                 
         }
-        return res;
+        return list;
     }
 
     boolean aggiungiRamo(String val, Categoria genitore, Categoria figlio)throws InvalidArgumentException{
+        assert(genitore!=null);
         if(conforme(figlio)&& !foglia(genitore)){
          Map<Elemento, Categoria> tmp=genitore.getCampo().getDom();
          for(Elemento e: tmp.keySet()){
@@ -123,7 +126,7 @@ public class Gerarchia{
     }
 
     public Categoria getCategoria(String arg){
-        List<Categoria> tmp=appiattisci(radice);
+        List<Categoria> tmp=appiattisci(radice, null);
         for(Categoria c : tmp){
             if(c.getNome().equals(arg))
                 return c;
